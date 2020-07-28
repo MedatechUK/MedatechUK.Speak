@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<this type="Speak.Customer" name="Trutex">
+  <p name="CustName" type="System.String" value="2" />
+  <p name="CustName2" type="System.String" value="2" />
+  <t ref="t\basetask\ServiceCall\81999157-f703-46c9-ba00-e3e04588b0fe.xml" type="Speak.ServiceCall" name="service call" />
+  <a name="Tasks">
+    <t ref="t\basetask\ServiceCall\81999157-f703-46c9-ba00-e3e04588b0fe.xml" type="Speak.ServiceCall" name="service call" />
+    <t ref="t\basetask\ServiceCall\16cf3d04-232f-44e3-a428-46e03f519f35.xml" type="Speak.ServiceCall" name="service call" />
+    <t ref="t\basetask\ServiceCall\343cc4ee-672c-4d63-a362-39ee3fcd990e.xml" type="Speak.ServiceCall" name="service call" />
+  </a>
+  <a name="Tasks2">
+    <t ref="t\basetask\ServiceCall\81999157-f703-46c9-ba00-e3e04588b0fe.xml" type="Speak.ServiceCall" name="service call" />
+    <t ref="t\basetask\ServiceCall\16cf3d04-232f-44e3-a428-46e03f519f35.xml" type="Speak.ServiceCall" name="service call" />
+    <t ref="t\basetask\ServiceCall\343cc4ee-672c-4d63-a362-39ee3fcd990e.xml" type="Speak.ServiceCall" name="service call" />
+  </a>
+</this>

@@ -51,6 +51,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,6 +70,26 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="base\Banter.vb" />
+    <Compile Include="base\baseGrammar.vb" />
+    <Compile Include="base\baseChoice.vb" />
+    <Compile Include="base\thing\things.vb" />
+    <Compile Include="base\this\this.vb" />
+    <Compile Include="base\thing\myThing.vb" />
+    <Compile Include="inherited\Choices\chCustomer.vb" />
+    <Compile Include="inherited\Choices\chActivate.vb" />
+    <Compile Include="inherited\Choices\chHours.vb" />
+    <Compile Include="inherited\Choices\chActivity.vb" />
+    <Compile Include="inherited\Choices\chTask.vb" />
+    <Compile Include="inherited\grammar\grWorkload.vb" />
+    <Compile Include="inherited\grammar\grActivate.vb" />
+    <Compile Include="inherited\things\Contacts.vb" />
+    <Compile Include="inherited\things\Staff.vb" />
+    <Compile Include="inherited\things\Initiator.vb" />
+    <Compile Include="inherited\things\tActivity.vb" />
+    <Compile Include="inherited\things\tasks\tProject.vb" />
+    <Compile Include="inherited\things\tProjWBS.vb" />
+    <Compile Include="inherited\things\tSalesOrderItem.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -85,6 +106,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="inherited\grammar\grReportA.vb" />
+    <Compile Include="base\thing\thing.vb" />
+    <Compile Include="inherited\things\tasks\tTask.vb" />
+    <Compile Include="inherited\things\tasks\tPhoneCall.vb" />
+    <Compile Include="inherited\things\tasks\tSalesOrder.vb" />
+    <Compile Include="inherited\things\tasks\tServiceCall.vb" />
+    <Compile Include="inherited\things\tasks\basetask.vb" />
+    <Compile Include="inherited\things\Hour.vb" />
+    <Compile Include="inherited\things\Customer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -95,6 +125,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="base\this\this.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -105,6 +138,11 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="base\this\this.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
