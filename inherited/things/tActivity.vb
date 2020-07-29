@@ -18,9 +18,21 @@ Public Class tActivity : Inherits thing
         End Set
     End Property
 
-    Sub New(Name As String, t As Type)
+    Private _plural As tplural
+    Public Property Plural As tplural
+        Get
+            Return _plural
+        End Get
+        Set(value As tplural)
+            _plural = value
+        End Set
+    End Property
+
+    Sub New(Name As String, plural As tplural, t As Type)
         MyBase.New(Name)
+        _plural = plural
         _t = t
+
     End Sub
 
     Sub New(t As this)

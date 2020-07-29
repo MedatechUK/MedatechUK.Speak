@@ -70,9 +70,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="base\Banter.vb" />
+    <Compile Include="base\Lanugage\Banter.vb" />
     <Compile Include="base\baseGrammar.vb" />
     <Compile Include="base\baseChoice.vb" />
+    <Compile Include="base\Lanugage\plural.vb" />
     <Compile Include="base\thing\things.vb" />
     <Compile Include="base\this\this.vb" />
     <Compile Include="base\thing\myThing.vb" />

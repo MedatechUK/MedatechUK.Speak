@@ -16,7 +16,7 @@ Public Class chActivate : Inherits Speak.baseChoice
             Add(New Initiator("thanks priority", False, thanksBanter))
             Add(New Initiator("thank you priority", False, thanksBanter))
             Add(New Initiator("ok priority", False, New Banter({"ok", "thanks", "cool"})))
-            Add(New Initiator("priority stop", False, New Banter({"ok"})))
+            Add(New Initiator("stop priority", False, New Banter({"ok"})))
 
         End With
 
