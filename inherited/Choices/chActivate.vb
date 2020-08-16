@@ -7,14 +7,11 @@ Public Class chActivate : Inherits Speak.baseChoice
 
     Public Overrides Sub StaticChoice(ByRef e As List(Of thing))
 
-        Dim startBanter As New Banter({"hi there", "hey", "hi", "I'm here", "I'm listening", "hello dave"})
-        Dim thanksBanter As New Banter({"you're very welcome", "you're welcome", "welcome", "sure", "no problem"})
-
         With e
-            Add(New Initiator("priority", True, startBanter))
-            Add(New Initiator("hey priority", True, startBanter))
-            Add(New Initiator("thanks priority", False, thanksBanter))
-            Add(New Initiator("thank you priority", False, thanksBanter))
+            Add(New Initiator("priority", True, New Banter({"hi there", "hi", "hello", "hello dave"})))
+            Add(New Initiator("hey priority", True, New Banter({"hey there", "hey", "hi"})))
+            Add(New Initiator("thanks priority", False, New Banter({"you're welcome", "no problem", "no worries"})))
+            Add(New Initiator("thank you priority", False, New Banter({"you're very welcome", "no, thank you", "no worries", "you're welcome"})))
             Add(New Initiator("ok priority", False, New Banter({"ok", "thanks", "cool"})))
             Add(New Initiator("stop priority", False, New Banter({"ok"})))
 

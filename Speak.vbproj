@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NumberToText, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\utils.NumberToText.1.0.0\lib\NumberToText.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -70,21 +73,26 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="base\disposableList.vb" />
     <Compile Include="base\Lanugage\Banter.vb" />
     <Compile Include="base\baseGrammar.vb" />
-    <Compile Include="base\baseChoice.vb" />
+    <Compile Include="base\Choice\baseChoice.vb" />
     <Compile Include="base\Lanugage\plural.vb" />
     <Compile Include="base\thing\things.vb" />
     <Compile Include="base\this\this.vb" />
     <Compile Include="base\thing\myThing.vb" />
+    <Compile Include="inherited\Choices\chOpen.vb" />
     <Compile Include="inherited\Choices\chCustomer.vb" />
     <Compile Include="inherited\Choices\chActivate.vb" />
-    <Compile Include="inherited\Choices\chHours.vb" />
     <Compile Include="inherited\Choices\chActivity.vb" />
     <Compile Include="inherited\Choices\chTask.vb" />
+    <Compile Include="base\Choice\dynChoice.vb" />
+    <Compile Include="inherited\grammar\grOpenUrl.vb" />
     <Compile Include="inherited\grammar\grWorkload.vb" />
     <Compile Include="inherited\grammar\grActivate.vb" />
     <Compile Include="inherited\things\Contacts.vb" />
+    <Compile Include="base\thing\dynThing.vb" />
+    <Compile Include="inherited\things\tReport.vb" />
     <Compile Include="inherited\things\Staff.vb" />
     <Compile Include="inherited\things\Initiator.vb" />
     <Compile Include="inherited\things\tActivity.vb" />
@@ -107,7 +115,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="inherited\grammar\grReportA.vb" />
     <Compile Include="base\thing\thing.vb" />
     <Compile Include="inherited\things\tasks\tTask.vb" />
     <Compile Include="inherited\things\tasks\tPhoneCall.vb" />
@@ -139,6 +146,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="base\this\this.xml">

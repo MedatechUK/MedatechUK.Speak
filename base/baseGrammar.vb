@@ -171,33 +171,45 @@ Public MustInherit Class baseGrammar : Inherits List(Of baseChoice)
             End Try
         End If
 
-        Dim q As Integer = 0
         For i As Integer = 1 To d.Keys.Max
             Select Case d(i).GetType
                 Case GetType(String)
                     Text = Trim(Text.Substring(d(i).Length - 1))
 
                 Case Else
-                    For Each this As thing In Me(q)
-                        Try
-                            If String.Compare(this.Name, Text.Substring(0, this.Name.Length), True) = 0 Then
-                                resp(q) = this
-                                If Not conversation.Keys.Contains(String.Format("{0}.{1}", Me.Name, Me(q).Name)) Then
-                                    conversation.Add(String.Format("{0}.{1}", Me.Name, Me(q).Name), this)
-                                Else
-                                    conversation(String.Format("{0}.{1}", Me.Name, Me(q).Name)) = this
+                    Dim f As Boolean = False
+                    For q As Integer = 0 To Me.Count - 1
+                        For Each this As thing In Me(q)
+                            Try
+                                If String.Compare(this.Name, Text.Substring(0, this.Name.Length), True) = 0 Then
+                                    f = True
+                                    resp(q) = this
+                                    If Not conversation.Keys.Contains(String.Format("{0}.{1}", Me.Name, Me(q).Name)) Then
+                                        conversation.Add(String.Format("{0}.{1}", Me.Name, Me(q).Name), this)
+                                    Else
+                                        conversation(String.Format("{0}.{1}", Me.Name, Me(q).Name)) = this
+                                    End If
+
+                                    Text = Trim(Text.Substring(this.Name.Length))
+                                    Exit For
+
                                 End If
+                            Catch : End Try
 
-                                Text = Trim(Text.Substring(this.Name.Length))
-                                Exit For
-
-                            End If
-                        Catch : End Try
+                        Next
+                        If f Then Exit For
 
                     Next
-                    q += 1
 
             End Select
+
+        Next
+        For q As Integer = 0 To Me.Count - 1
+            If resp(q) Is Nothing Then
+                If conversation.Keys.Contains(String.Format("{0}.{1}", Me.Name, Me(q).Name)) Then
+                    resp(q) = conversation(String.Format("{0}.{1}", Me.Name, Me(q).Name))
+                End If
+            End If
         Next
 
         Dim ev As EventHandler = _GrammarSet(GrammarSet).Handler

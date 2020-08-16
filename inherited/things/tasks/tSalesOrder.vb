@@ -17,6 +17,12 @@ Public Class tSalesOrder : Inherits basetask
 
 #End Region
 
+    Public Overrides ReadOnly Property url As String
+        Get
+            Return String.Format("priority:priform#ORDERS:{0}:live:tabulaemerge.ini", Me.id)
+        End Get
+    End Property
+
     Private _ReportedBy As tContact
     Public Property ReportedBy As tContact
         Get
@@ -27,15 +33,6 @@ Public Class tSalesOrder : Inherits basetask
         End Set
     End Property
 
-    Private _Status As String
-    Public Property Status As String
-        Get
-            Return _Status
-        End Get
-        Set(value As String)
-            _Status = value
-        End Set
-    End Property
 
     Private _SalesOrderItems As things
     Public Property SalesOrderItems As things
@@ -63,32 +60,11 @@ Public Class tSalesOrder : Inherits basetask
 
     End Sub
 
-    Public Overrides Sub Refresh(Optional ByRef Update As this = Nothing)
-        MyBase.Refresh(Update)
-        If Update Is Nothing Then
-            myThings.LoadURL("speak_SalesOrderItems.ashx", {String.Format("ORDNAME={0}", Me.Name)})
-
-        Else
-            myThings.LoadType(GetType(tSalesOrderItem))
-
-        End If
+    Public Overrides Sub Refresh()
+        'myThings.LoadURL("speak_SalesOrderItems.ashx", {String.Format("ORDNAME={0}", Me.Name)})
 
     End Sub
 
-    Public Overrides Sub Update(ByRef t As thing)
-        If Not t Is Nothing Then
-            t.Load()
-            With TryCast(t, tSalesOrder)
-                For Each c As tSalesOrderItem In .SalesOrderItems
-                    If Not Me.SalesOrderItems.Contains(c) Then
-                        myThings.LoadURL("speak_SalesOrderItems.ashx", {String.Format("ORDNAME={0}", Me.Name)})
-                        Exit For
-                    End If
-                Next
-            End With
-        End If
-
-    End Sub
 
 #End Region
 

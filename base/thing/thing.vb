@@ -8,17 +8,7 @@ Public MustInherit Class thing
 
     MustOverride Sub Context(ParamArray args() As thing)
 
-    Private _Update As thing
-    Overridable Sub Refresh(Optional ByRef Update As this = Nothing)
-
-        If Not Update Is Nothing Then
-            _Update = Activator.CreateInstance(Me.GetType, {Update})
-
-        End If
-
-    End Sub
-
-    Overridable Sub Update(ByRef t As thing)
+    Overridable Sub Refresh()
 
     End Sub
 
@@ -31,12 +21,19 @@ Public MustInherit Class thing
         End Get
     End Property
 
-    Public Overridable Property Description As String
+    Private _Description As String = Nothing
+    Public Property Description As String
         Get
-            Return Name
+            Select Case _Description Is Nothing
+                Case True
+                    Return _Name
+                Case Else
+                    Return _Description
+            End Select
+
         End Get
         Set(value As String)
-
+            _Description = value
         End Set
     End Property
 
@@ -97,6 +94,12 @@ Public MustInherit Class thing
         End Get
     End Property
 
+    Public ReadOnly Property typename As String
+        Get
+            Return _t.type
+        End Get
+    End Property
+
 #End Region
 
 #Region "Ctor"
@@ -120,6 +123,7 @@ Public MustInherit Class thing
         _t = t
         _Name = t.name
         _id = t.id
+
 
         Dim p As Type = Me.GetType
         _Path = String.Format("{0}\", p.Name)
@@ -156,32 +160,24 @@ Public MustInherit Class thing
             pr.SetValue(Me, New things)
         Next
 
-        _Loaded = (t.t.Count = 0 And t.a.Count = 0)
+        _Loaded = False
 
     End Sub
 
-    Sub Load()
+#End Region
 
-        _Loaded = True
+#Region "Methods"
+
+    Public Function Load() As Boolean
 
         For Each th As t In _t.t
             Dim pr = Me.[GetType]().GetProperty(th.name, BindingFlags.[Public] Or BindingFlags.Instance)
 
-            If myThings(pr.PropertyType).Keys.Contains(th.id) Then
-                pr.SetValue(Me, myThings(pr.PropertyType)(th.id))
+            If myThings(th.GetType).Keys.Contains(th.id) Then
+                pr.SetValue(Me, myThings(th.GetType)(th.id))
 
             Else
-                If New FileInfo(IO.Path.Combine(BasePath, th.ref)).Exists Then
-                    Using sr As New StreamReader(IO.Path.Combine(BasePath, th.ref))
-                        pr.SetValue(Me,
-                            myThings.Addthing(serialiser.Deserialize(sr))
-                        )
-                    End Using
-
-                Else
-                    Console.WriteLine("Bad data.")
-
-                End If
+                Return False
 
             End If
 
@@ -193,21 +189,17 @@ Public MustInherit Class thing
             With pr.GetValue(Me)
                 For Each q As t In a.t
                     Try
-                        .Add(myThings(q.GetType)(q.id))
+                        Dim f As Boolean = False
+                        For Each t As thing In pr.GetValue(Me)
+                            If t.id = q.id Then
+                                f = True
+                                Exit For
+                            End If
+                        Next
+                        If Not f Then .Add(myThings(q.GetType)(q.id))
 
                     Catch ex As Exception
-                        If New FileInfo(IO.Path.Combine(BasePath, q.ref)).Exists Then
-                            Using sr As New StreamReader(IO.Path.Combine(BasePath, q.ref))
-                                .Add(
-                                    myThings.Addthing(serialiser.Deserialize(sr))
-                                )
-
-                            End Using
-
-                        Else
-                            Console.WriteLine("Bad data.")
-
-                        End If
+                        Return False
 
                     End Try
 
@@ -217,16 +209,15 @@ Public MustInherit Class thing
 
         Next
 
-        If Not _Update Is Nothing Then
-            Update(_Update)
-            Me.Save()
-        End If
+        _Loaded = True
+        With New FileInfo(Me.saveFile)
+            If Not .Exists Then Me.Save()
 
-    End Sub
+        End With
 
-#End Region
+        Return True
 
-#Region "Methods"
+    End Function
 
     Public Sub Save()
         Using sw As New StreamWriter(saveFile)

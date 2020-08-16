@@ -23,18 +23,20 @@ Public Class tServiceCall : Inherits basetask
             Return _ReportedBy
         End Get
         Set(value As tContact)
-            _ReportedBy = value
+            If value.id = "0" Then
+                _ReportedBy = Nothing
+            Else
+                _ReportedBy = value
+            End If
+
         End Set
     End Property
 
-    Private _Status As String
-    Public Property Status As String
+    Public Overrides ReadOnly Property url As String
         Get
-            Return _Status
+            Return String.Format("priority:priform#DOCUMENTS_Q:{0}:live:tabulaemerge.ini", Me.id)
         End Get
-        Set(value As String)
-            _Status = value
-        End Set
+
     End Property
 
     Public Overrides Sub Context(ParamArray args() As thing)

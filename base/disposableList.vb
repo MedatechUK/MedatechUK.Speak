@@ -1,20 +1,4 @@
-﻿
-
-Public Class Banter : Inherits List(Of String) : Implements IDisposable
-
-    Private Random As New Random
-
-    Sub New(ParamArray args() As String)
-        For Each str As String In args
-            Me.Add(str)
-        Next
-
-    End Sub
-
-    Public Function Response() As String
-        Return Me(Random.Next(0, Me.Count - 1))
-
-    End Function
+﻿Public Class disposableList : Inherits List(Of thing) : Implements IDisposable
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
@@ -47,6 +31,5 @@ Public Class Banter : Inherits List(Of String) : Implements IDisposable
         ' GC.SuppressFinalize(Me)
     End Sub
 #End Region
-
 
 End Class

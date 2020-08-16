@@ -5,13 +5,6 @@ Imports Speak
 
 Public Class chTask : Inherits Speak.baseChoice
 
-    Public Overrides ReadOnly Property ChoiceType As Type
-        Get
-            Return GetType(basetask)
-
-        End Get
-    End Property
-
     Public Overrides Sub StaticChoice(ByRef e As List(Of thing))
         With e
             .Add(New tServiceCall)

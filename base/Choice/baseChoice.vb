@@ -18,6 +18,10 @@ Public MustInherit Class baseChoice : Inherits List(Of thing) : Implements IDisp
 
     End Function
 
+    Sub New(Dyn As Boolean)
+
+    End Sub
+
     Sub New()
 
         Me.Clear()

@@ -66,6 +66,17 @@ Public Class tSalesOrderItem : Inherits thing
         End Set
     End Property
 
+    Public Sub Choice(ByRef d As dynChoice)
+        d.Add(
+            New dynThing(
+                String.Format(
+                    "line {0}",
+                    Me.Line.ToString
+                ), Me
+            )
+        )
+    End Sub
+
 #Region "overriden Methods"
 
     Public Overrides Sub Context(ParamArray args() As thing)

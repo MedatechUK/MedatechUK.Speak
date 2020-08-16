@@ -1,4 +1,6 @@
-﻿Public Class tplural
+﻿Imports NumberToText.Api
+
+Public Class tplural
 
     Private _singular As String
     Public Property Singular As String
@@ -33,10 +35,10 @@
 
             Case 1
                 Select Case _singular.Substring(0, 1).ToLower
-                    Case "a", "e", "i", "o", "u", "h"
-                        Return String.Format("{0} {1}", New Banter({"one", "an"}).Response, _singular)
+                    Case "a", "e", "i", "o", "u"
+                        Return String.Format("{0} {1}", "an", _singular)
                     Case Else
-                        Return String.Format("{0} {1}", New Banter({"one", "a"}).Response, _singular)
+                        Return String.Format("{0} {1}", "a", _singular)
                 End Select
 
             Case 2
@@ -49,7 +51,7 @@
                 Return String.Format("{0} {1}", New Banter({"twelve", "a dozen"}).Response, _plural)
 
             Case Else
-                Return String.Format("{0} {1}", count.ToString, _plural)
+                Return String.Format("{0} {1}", NumberConverter.NumberToText(count), _plural)
 
         End Select
 

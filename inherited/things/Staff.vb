@@ -59,6 +59,27 @@ Public Class tStaff : Inherits thing
         End Set
     End Property
 
+    Private _CurrentTask As tReport
+    Public Property CurrentTask As tReport
+        Get
+            Return _CurrentTask
+        End Get
+        Set(value As tReport)
+            _CurrentTask = value
+        End Set
+    End Property
+
+    Private _TaskLog As New things
+    Public Property TaskLog As things
+        Get
+            Return _TaskLog
+        End Get
+        Set(value As things)
+            _TaskLog = value
+        End Set
+
+    End Property
+
 #End Region
 
 #Region "Methods"

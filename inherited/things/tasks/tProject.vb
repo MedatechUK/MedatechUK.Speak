@@ -17,6 +17,13 @@ Public Class tProject : Inherits basetask
 
 #End Region
 
+    Public Overrides ReadOnly Property url As String
+        Get
+            Return String.Format("priority:priform#DOCUMENTS_p:{0}:live:tabulaemerge.ini", Me.id)
+        End Get
+
+    End Property
+
     Private _ProjWBS As things
     Public Property ProjWBS As things
         Get
@@ -43,30 +50,8 @@ Public Class tProject : Inherits basetask
 
     End Sub
 
-    Public Overrides Sub Refresh(Optional ByRef Update As this = Nothing)
-        MyBase.Refresh(Update)
-        If Update Is Nothing Then
-            myThings.LoadURL("speak_ProjWBS.ashx", {String.Format("ProjNo={0}", Me.Name)})
-
-        Else
-            myThings.LoadType(GetType(tProjWBS))
-
-        End If
-
-    End Sub
-
-    Public Overrides Sub Update(ByRef t As thing)
-        If Not t Is Nothing Then
-            t.Load()
-            With TryCast(t, tProject)
-                For Each c As tProjWBS In .ProjWBS
-                    If Not Me.ProjWBS.Contains(c) Then
-                        myThings.LoadURL("speak_ProjWBS.ashx", {String.Format("ProjNo={0}", Me.Name)})
-                        Exit For
-                    End If
-                Next
-            End With
-        End If
+    Public Overrides Sub Refresh()
+        'myThings.LoadURL("speak_ProjWBS.ashx", {String.Format("ProjNo={0}", Me.Name)})
 
     End Sub
 

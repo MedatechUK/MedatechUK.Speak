@@ -2,16 +2,6 @@
 
 Public Class Hour : Inherits thing
 
-    Private _Description As String
-    Public Overrides Property Description As String
-        Get
-            Return _Description
-        End Get
-        Set(value As String)
-            _Description = value
-        End Set
-    End Property
-
     Private _t As TimeSpan
     Public ReadOnly Property Span As TimeSpan
         Get
@@ -19,13 +9,24 @@ Public Class Hour : Inherits thing
         End Get
     End Property
 
+    Private _task As thing
+    Public Property Task As thing
+        Get
+            Return _task
+        End Get
+        Set(value As thing)
+            _task = value
+        End Set
+    End Property
+
     Sub New()
         MyBase.New("")
     End Sub
 
-    Sub New(Name As String, Description As String, t As TimeSpan)
+    Sub New(Name As String, Description As String, task As thing, t As TimeSpan)
         MyBase.New(Name)
-        _Description = Description
+        Me.Description = Description
+        _task = task
         _t = t
     End Sub
 

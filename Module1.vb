@@ -49,26 +49,40 @@ Module Module1
 
     Public ReadOnly Property BaseURL As String
         Get
-            Return "https://priority.medatechuk.com/api/live/"
+            Return "https://priority.medatechuk.com/"
         End Get
     End Property
 
-    Public ReadOnly Property PriorityUsr As String
+    Public ReadOnly Property PriorityUsr As tStaff
         Get
-            Return "SimonB"
+            Return myThings(GetType(tStaff))("SimonB")
         End Get
     End Property
 
     Sub Main()
 
-        myThings.LoadURL("speak_Staff.ashx", {""})
-        myThings.LoadURL("speak_customers.ashx", {""})
+        With myThings
+            .LoadType(GetType(tReport))
+            .LoadType(GetType(Customer))
+            .LoadType(GetType(tContact))
+            .LoadType(GetType(tServiceCall))
+            .LoadType(GetType(tProject))
+            .LoadType(GetType(tSalesOrder))
+            .LoadType(GetType(tStaff))
+            .LoadType(GetType(tProjWBS))
+            .LoadType(GetType(tSalesOrderItem))
+
+            .LoadURL("speak_Staff.ashx", {""})
+            .LoadURL("speak_customers.ashx", {""})
+
+        End With
 
         Do While myThings.Load : Loop
 
-        Dim r As New grReportA
+        'Dim r As New grReportA
         Dim a As New grActivate
         Dim w As New grWorkload
+        Dim o As New grOpenUrl
 
         With syn
             .SetOutputToDefaultAudioDevice()
@@ -99,7 +113,7 @@ Module Module1
         With e
             For Each g As String In grammars.Keys
                 If String.Compare(g, Split(.Result.Grammar.Name, ":")(0)) = 0 Then
-                    If (.Result.Confidence < 0.6) Then
+                    If (grammars(g).Initiator And .Result.Confidence < 0.9) Or (Not (grammars(g).Initiator) And .Result.Confidence < 0.6) Then
                         If Not grammars(g).Initiator Then syn.Speak("Sorry, I didn't catch that.")
 
                     Else
@@ -108,13 +122,26 @@ Module Module1
                         grammars(g).ParseResponse(Split(.Result.Grammar.Name, ":")(1), .Result.Text)
 
                     End If
-
                 End If
+
+
             Next
         End With
 
-        sre.RecognizeAsync(RecognizeMode.Multiple)
+        Dim F As Boolean = False
+        Do
+            Try
+                sre.RecognizeAsync(RecognizeMode.Multiple)
+                F = True
+
+            Catch ex As Exception
+                sre.RecognizeAsyncStop()
+
+            End Try
+
+        Loop Until F
 
     End Sub
+
 
 End Module
